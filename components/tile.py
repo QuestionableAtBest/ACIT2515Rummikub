@@ -1,9 +1,8 @@
-colors = ["r","b","y","bl","joker"]
-numbers = ["1","2","3","4","5","6","7","8","9","10","11","12","13"]
-
+from pathlib import Path
+from constants import TILE_COLORS, TILE_NUMBERS
 class Tile:
     def __init__(self, color, number):
-        if color not in colors or number not in numbers:
+        if color not in TILE_COLORS or number not in TILE_NUMBERS:
             raise ValueError("Invalid color")
         else:
             self.color = color
@@ -20,7 +19,7 @@ class Tile:
         return self.color == other.color
     
     def get_image_path(self):
-         pass
+        return Path(f"../images/{self.color}{self.number}.png")
     
     
     
