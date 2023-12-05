@@ -10,7 +10,7 @@ def main():
 
     screen = GameScreen(window)
     screen.run()
-
+    
 
 if __name__ == "__main__":
     main()

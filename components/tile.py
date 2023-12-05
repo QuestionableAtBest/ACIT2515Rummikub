@@ -1,8 +1,10 @@
 from pathlib import Path
-from constants import TILE_COLORS, TILE_NUMBERS
+import constants
+import pygame
+
 class Tile:
     def __init__(self, color, number):
-        if color not in TILE_COLORS or number not in TILE_NUMBERS:
+        if color not in constants.TILE_COLORS or number not in constants.TILE_NUMBERS:
             raise ValueError("Invalid color")
         else:
             self.color = color
@@ -21,5 +23,6 @@ class Tile:
     def get_image_path(self):
         return Path(f"../images/{self.color}{self.number}.png")
     
-    
-    
+    def load_sprite(self):
+        image = pygame.image.load(str(self.image_path))
+        return pygame.sprite.Sprite(image)
