@@ -1,6 +1,5 @@
 class Rack:
-    def __init__(self, player_name):
-        self.player_name = player_name
+    def __init__(self):
         self.tiles = []
 
     def add_tile(self, tile):
@@ -9,13 +8,6 @@ class Rack:
     def remove_tile(self, tile):
         if tile in self.tiles:
             self.tiles.remove(tile)
-        else:
-            print(f"{tile} not found in {self.player_name}'s rack.")
-
-    def display_rack(self):
-        print(f"{self.player_name}'s Rack:")
-        for tile in self.tiles:
-            print(tile, end=" ")
 
     def __len__(self):
         return len(self.tiles)

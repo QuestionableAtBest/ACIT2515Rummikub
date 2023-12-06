@@ -1,25 +1,18 @@
-from rack import Rack
-from tile import Tile
+from .rack import Rack
 
 class Player:
     def __init__(self, name):
         self.name = name
-        self.rack = Rack(name)
+        self.rack = Rack()
+        #Probably add database scores to this later
 
     def add_tile_to_rack(self, tile):
         self.rack.add_tile(tile)
 
-    def play_tile(self, tile):
-        if tile in self.rack.tiles:
-            self.rack.remove_tile(tile)
-            print(f"{self.name} played {tile}.")
-            return tile
-        else:
-            print(f"{self.name} doesn't have {tile} in their rack.")
-            return None
-
-    def display_rack(self):
-        print(f"{self.name}'s Rack:")
+    def get_score(self):
+        score = 0
         for tile in self.rack.tiles:
-            print(tile, end=" ")
-        print()
+            score += tile.number
+    
+    def get_tiles(self):
+        return self.rack.tiles

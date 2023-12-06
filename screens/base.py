@@ -9,7 +9,6 @@ class BaseScreen:
             self.persistent = persistent
 
         self.window = window
-        self.next_screen = None
         self.running = False
 
     def run(self):
@@ -35,4 +34,4 @@ class BaseScreen:
             self.next_screen = False
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self.running = False
-            self.next_screen = False
+            self.next_screen = False 

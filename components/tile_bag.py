@@ -1,17 +1,22 @@
 from random import shuffle
-from tile import Tile
-import constants
+from .tile import Tile
+from constants import TILE_COLORS, TILE_NUMBERS
+
 class TileBag:
     def __init__(self):
         self.tiles = []
-        self.initialize_tiles()
-        self.tiles = shuffle(self.tiles)
+        test_tile = Tile("1","r")
+        self.tiles.append(test_tile)
+        self.fill_tiles()
+        shuffle(self.tiles)
 
-    def initialize_tiles(self):
-        for color in constants.TILE_COLORS:
-            for number in constants.TILE_NUMBERS:
-                self.tiles.append(Tile(color, number))
+    # Fill tile bag with all tiles for game
+    def fill_tiles(self):
+        for color in TILE_COLORS:
+            for number in TILE_NUMBERS:
+                self.tiles.append(Tile(number, color))
 
+    # Draw a tile from the bag
     def draw_tile(self):
         if self.tiles:
             return self.tiles.pop()

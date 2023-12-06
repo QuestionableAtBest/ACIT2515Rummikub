@@ -1,3 +1,3 @@
 from .game import GameScreen
 
-__all__ = ["GameScreen"]
+__all__ = ["GameScreen", "StartScreen"]

@@ -1,15 +1,20 @@
-import random
 import pygame
-from components.tile import Tile
-from components.rack import Rack
+from components import *
 from .base import BaseScreen
-import constants
+from constants import RACK_WIDTH, RACK_HEIGHT, RACK_START_X, RACK_START_Y, TILE_SPACING
 
 class GameScreen(BaseScreen):
     def __init__(self, window, persistent=None):
         super().__init__(window, persistent)
-        self.player_rack = Rack("Player")
-        self.load_rack_sprites()
+        self.player = Player("TEMP NAME")
+        self.cpu = Player("CPU")
+        self.bag = TileBag()
+
+        # Draw 14 tiles to start
+        for i in range(14):
+            self.player.add_tile_to_rack(self.bag.draw_tile())
+            self.cpu.add_tile_to_rack(self.bag.draw_tile())
+
 
     def update(self):
         pass
@@ -18,26 +23,17 @@ class GameScreen(BaseScreen):
         super().manage_event(event)
         pass
 
-
-    def load_rack_sprites(self):
-        # Load rack sprites (two black rectangles)
-        self.rack_sprite = pygame.Surface((constants.RACK_WIDTH, constants.RACK_HEIGHT))
-        self.rack_sprite.fill((0, 0, 0))
-
     def draw(self):
         self.draw_rack()
         self.draw_tiles_on_rack()
 
     def draw_rack(self):
-        # Draw the player's rack using the rack sprites
-        for i in range(constants.RACK_SIZE):
-            x = constants.RACK_START_X + i * (constants.RACK_WIDTH + constants.RACK_SPACING)
-            y = constants.RACK_START_Y
-            self.window.blit(self.rack_sprite, (x, y))
+        self.rack_sprite = pygame.Surface((RACK_WIDTH, RACK_HEIGHT))
+        self.rack_sprite.fill((0, 0, 0))
+        self.window.blit(self.rack_sprite, (RACK_START_X, RACK_START_Y))
 
     def draw_tiles_on_rack(self):
-        # Draw the tiles on the player's rack
-        for i, tile in enumerate(self.player_rack.tiles):
-            x = constants.RACK_START_X + i * (constants.RACK_WIDTH  + constants.RACK_SPACING)
-            y = constants.RACK_START_Y
-            self.window.blit(tile.sprite.image, (x, y))
+        for i, tile in enumerate(self.player.get_tiles()):
+            x = RACK_START_X + i * (RACK_WIDTH + TILE_SPACING)
+            y = RACK_START_Y
+            self.window.blit(tile.load_sprite(), (x, y))
