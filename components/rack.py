@@ -1,6 +1,6 @@
 from pygame.sprite import Sprite
 import pygame
-from constants import RACK_START_X, RACK_START_Y, TILE_WIDTH, TILE_SPACING
+#Online answer for sorting sprites
 from operator import attrgetter
 
 class Rack(Sprite):
@@ -18,6 +18,7 @@ class Rack(Sprite):
     def update(self):
         #Always sort rack by color
         self.sort_by_color()
+        self.tiles.update()
 
     def draw(self, surface):
         # Draw the tiles on the rack
@@ -31,6 +32,12 @@ class Rack(Sprite):
 
     def sort_by_color(self):
         self.tiles = pygame.sprite.Group(sorted(self.tiles, key=attrgetter('color')))
+
+    #Pulled from the editable group class. Still is not working
+    def manage_click(self, event):
+        for s in self.tiles:
+            if s.rect.collidepoint(event.pos):
+                s.toggle_selected()
 
     def valid_set(self):
         #Basic check, all valid racks must have at least 4 tiles

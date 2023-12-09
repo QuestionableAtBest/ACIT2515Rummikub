@@ -30,11 +30,29 @@ class GameScreen(BaseScreen):
         super().manage_event(event)
         # If left click
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            # Handle tile selection
-            for tile in self.player.get_tiles():
-                if tile.rect.collidepoint(event.pos):
-                    tile.toggle_selection()
-            
+            print("Clicked at:", event.pos)
+            self.player.rack.manage_click(event)
+        # If keyboard pressed
+        if event.type == pygame.KEYDOWN:
+            # and is p (player has passed their turn)
+            if event.key == pygame.K_p:
+                # Player has made a valid move
+                if self.player.made_move:
+                    self.player.made_move = False
+                else:
+                    # Player passed without making a valid move, draw a tile
+                    self.player.add_tile_to_rack(self.tile_bag.get_tile())
+                    #Check if drawing the tile resulted in 26 tiles in the rack or 0 tiles in the bag, if so then game over (MY RULE NOT OFFICIAL RUMMIKUB)
+                    from .game_over import GameOverScreen
+                    if len(self.player.rack) >= 26 or len(self.tile_bag) == 0:
+                        self.persistent["win"] = False
+                        self.persistent["score"] = 0
+                        self.next_screen = GameOverScreen(self.window, self.persistent)
+                # After player passes, CPU's Turn (Right now it is the dumbest I can think of, random tile from its rack, 
+                # random rack on the table. Check valid move, if not then just draw a tile)
+                # Also need to find a way to alternate, so that player cant press anything during CPU turn.
+                # self.cpu_turn()
+
     def draw(self):
         self.window.fill((104, 95, 140)) 
         rack_surface = pygame.Surface((RACK_WIDTH, RACK_HEIGHT))

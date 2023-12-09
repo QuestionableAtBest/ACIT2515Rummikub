@@ -18,3 +18,6 @@ class TileBag:
             return self.tiles.pop()
         else:
             return None
+        
+    def __len__(self):
+        return len(self.tiles)

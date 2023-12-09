@@ -1,4 +1,3 @@
-from pathlib import Path
 import pygame
 from constants import TILE_COLORS,TILE_NUMBERS,TILE_WIDTH,TILE_HEIGHT
 from pygame.sprite import Sprite
@@ -28,3 +27,21 @@ class Tile(Sprite):
 
     def toggle_selected(self):
         self.selected = not self.selected
+
+    def update(self):
+        # Check if the tile is selected,if yes add border
+        if self.selected:
+            # Create a surface with image dimensions and draw a red border
+            border = pygame.Surface((self.rect.width, self.rect.height))
+            #Make fully transparent
+            border.fill((255, 255, 255, 0))
+            border.blit(self.image, (0, 0))
+            #make border
+            pygame.draw.rect(border, (255,0,0), border.get_rect(), 50)
+            self.image = border
+        else:
+            # Unselected, reset the image
+            self.image = pygame.image.load(f"images/{self.number}{self.color}.png")
+            self.image = pygame.transform.scale(self.image, (TILE_WIDTH, TILE_HEIGHT))
+        # Update the rect after changing the image
+        self.rect = self.image.get_rect()
