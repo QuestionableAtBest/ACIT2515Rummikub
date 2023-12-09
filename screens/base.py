@@ -1,6 +1,5 @@
 import pygame
 
-
 class BaseScreen:
     def __init__(self, window, persistent=None):
         if persistent is None:
